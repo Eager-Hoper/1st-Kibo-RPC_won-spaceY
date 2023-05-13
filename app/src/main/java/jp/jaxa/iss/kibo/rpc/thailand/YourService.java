@@ -1,4 +1,8 @@
-//このプログラムは第１回大会向けに作られた。第１回ではチェックポイントとなるQRコードを
+/* このプログラムは第１回大会のファイナルラウンド向けに作られた。ここではチェックポイント（P1、P2)にあるQRコードを読み取ってその情報を元にP3まで到達し、そばにあるターゲットに近づく。
+そして画像認識でターゲット円を捉え、レーザーを照射する。ターゲットとの適切な距離を保つのが重要。*/
+/* 今回はターゲットがランダムに変わる。一方、全てのターゲットの座標はわかっている。画像認識やレーザーに関してはほぼ同じ。KOZを避けないといけないのも同じ。
+あと、クルーへの報告ミッションがある。*/
+
 package jp.jaxa.iss.kibo.rpc.thailand; //複数のクラスをまとめるpackage p.236あたり参照
 
 import gov.nasa.arc.astrobee.Kinematics; /* Kinematicsより前はpackageの名前、Kinematicsはinterface(classの中でも特に抽象的なもの)の名前。
@@ -61,17 +65,17 @@ public class YourService extends KiboRpcService
         moveTo(10.4600f, -6.2800f, 5.2400f, 0.0f, 0.0f, 0.0f, 0.0f);
         moveTo(10.4600f, -6.7800f, 5.2400f, 0.0f, 0.0f, 0.0f, 0.0f);
         final double[] P3_qua = QR_event(11.0174f, -7.9378f, 5.4100f, 0.0f, -0.7071f, 0.0f, 0.7071f, max_count, P2);
-        // QR part
+        // QR part P3までの航行
 
         moveTo(11.4600f, -8.6000f, 4.8000f, 0.0f, 0.0f, 0.7071f, -0.7071f);
         //double[] AR_pos = AR_event((float) P3_pos[0], (float) P3_pos[1], (float) P3_pos[2], (float) P3_qua[0], (float) P3_qua[1], (float) P3_qua[2], (float) P3_qua[3], max_count, true);
         //double[] AR_pos = AR_event(10.9500f, -9.5900f, 5.4000f, 0.0f, 0.0f, 0.7071f, -0.7071f, max_count, true);
         double[] AR_pos = AR_event(10.9250f, -10.0400f, 5.4000f, 0.0f, 0.0f, 0.7071f, -0.7071f, max_count, true);
-        // AR part
+        // AR part　ターゲットとの距離感の確保
 
         AR_pos = AR_event((float) AR_pos[0], -9.5900f, (float) AR_pos[2],0.0f, 0.0f, 0.7071f, -0.7071f, max_count, false);
         moveTo(AR_pos[0], -9.5900f, AR_pos[2], AR_pos[0]+ARtoTarget, -9.5900f-getPointCloud(center_range)-y_shift, AR_pos[2]+ARtoTarget);
-        // Target part
+        // Target part　レーザー照射？
 
 
         judgeSendFinish(true);
