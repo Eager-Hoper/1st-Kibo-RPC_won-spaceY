@@ -1,12 +1,17 @@
+//そもそもどういう仕組みで動いてるの？
 package jp.jaxa.iss.kibo.rpc.thailand; //複数のクラスをまとめるpackage p.236あたり参照
 
-import gov.nasa.arc.astrobee.Kinematics;
+import gov.nasa.arc.astrobee.Kinematics; /* Kinematicsより前はpackageの名前、Kinematicsはinterface(classの中でも特に抽象的なもの)の名前。
+以後、Kinematicsというinterfaceは全てgov.nasa.arc.astrobee.Kinematicsのことである（入力の手間を削減） */
+//何でこれでNASAのコードが使えるの？astrobeeに組み込まれてるとか？
+//プログラミングマニュアルp.49のTypeってどういういみ？
 import gov.nasa.arc.astrobee.Result;
 import gov.nasa.arc.astrobee.types.Point;
-import gov.nasa.arc.astrobee.types.Quaternion;
+import gov.nasa.arc.astrobee.types.Quaternion;　//あえてimportしていないinterfaceもあるようだ
 import jp.jaxa.iss.kibo.rpc.api.KiboRpcService;
 import jp.jaxa.iss.kibo.rpc.api.types.PointCloud;
 // astrobee library
+// jaxaのレポジトリはどこにある？
 import android.graphics.Bitmap;
 import android.os.SystemClock;
 import android.util.Log;
@@ -29,7 +34,7 @@ import static org.opencv.android.Utils.matToBitmap;
 import java.util.ArrayList;
 import java.util.List;
 // java library
-
+//libraryはどう調べれば見つかるのだろうか？
 
 public class YourService extends KiboRpcService
 {
@@ -46,9 +51,9 @@ public class YourService extends KiboRpcService
     // shift position value
 
     @Override
-    protected void runPlan1()
+    protected void runPlan1()　//ここが実際に行われる指示
     {
-        api.judgeSendStart();
+        api.judgeSendStart();　
 
 
         final double[] P3_pos = QR_event(10.7600f, -5.6122f, 4.5826f, 0.0f, 0.0f, 1.0f, 0.0f, max_count, P1);
