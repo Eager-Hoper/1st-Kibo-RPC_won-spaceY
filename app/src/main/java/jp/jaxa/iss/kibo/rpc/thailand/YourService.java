@@ -1,4 +1,4 @@
-package jp.jaxa.iss.kibo.rpc.thailand; //package
+package jp.jaxa.iss.kibo.rpc.thailand; //複数のクラスをまとめるpackage p.236あたり参照
 
 import gov.nasa.arc.astrobee.Kinematics;
 import gov.nasa.arc.astrobee.Result;
