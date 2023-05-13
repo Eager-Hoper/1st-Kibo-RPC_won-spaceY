@@ -1,4 +1,4 @@
-//そもそもどういう仕組みで動いてるの？
+//このプログラムは第１回大会向けに作られた。第１回ではチェックポイントとなるQRコードを
 package jp.jaxa.iss.kibo.rpc.thailand; //複数のクラスをまとめるpackage p.236あたり参照
 
 import gov.nasa.arc.astrobee.Kinematics; /* Kinematicsより前はpackageの名前、Kinematicsはinterface(classの中でも特に抽象的なもの)の名前。
