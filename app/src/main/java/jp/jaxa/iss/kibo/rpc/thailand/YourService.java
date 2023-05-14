@@ -1,6 +1,8 @@
-/* このプログラムは第１回大会のファイナルラウンド向けに作られた。ここではチェックポイント（P1、P2)にあるQRコードを読み取ってその情報を元にP3まで到達し、そばにあるターゲットに近づく。
+/* このプログラムは第１回大会のファイナルラウンド向けに作られた。
+ここではチェックポイント（P1、P2)にあるQRコードを読み取ってその情報を元にP3まで到達し、そばにあるターゲットに近づく。
 そして画像認識でターゲット円を捉え、レーザーを照射する。ターゲットとの適切な距離を保つのが重要だった。*/
-/* 第４回はターゲットがランダムに変わる。一方、全てのターゲットの座標はわかっている。画像認識やレーザーに関してはほぼ同じ。KOZを避けないといけないのも同じ。
+/* 第４回はターゲットがランダムに変わる。一方、全てのターゲットの座標はわかっている。
+画像認識やレーザーに関してはほぼ同じ。KOZを避けないといけないのも同じ。
 あと、クルーへの報告ミッションが追加された。*/
 
 package jp.jaxa.iss.kibo.rpc.thailand; //複数のクラスをまとめるpackage p.236あたり参照
@@ -15,7 +17,7 @@ import gov.nasa.arc.astrobee.types.Quaternion;　//あえてimportしていな�
 import jp.jaxa.iss.kibo.rpc.api.KiboRpcService;
 import jp.jaxa.iss.kibo.rpc.api.types.PointCloud;
 // astrobee library
-// jaxaのレポジトリはどこにある？
+// jaxaのレポジトリはGithubのどこにある？
 import android.graphics.Bitmap;
 import android.os.SystemClock;
 import android.util.Log;
@@ -38,11 +40,11 @@ import static org.opencv.android.Utils.matToBitmap;
 import java.util.ArrayList;
 import java.util.List;
 // java library
-//libraryはどう調べれば見つかるのだろうか？
+//libraryはどう調べれば見つかるのだろうか？使えるlibraryとそうでないものの区別は？
 
-public class YourService extends KiboRpcService
-{
-    String MODE = "iss"; // mode setting ("sim" or "iss")
+public class YourService extends KiboRpcService　//KiboRpcServiceというクラスはどこから来た？
+
+    String MODE = "iss"; // mode setting ("sim" or "iss")　//finalroundなのでiss
     int NAV_MAX_COL = 1280;
     int NAV_MAX_ROW =  960;
     int PointCloud_COL = 224;
@@ -55,7 +57,7 @@ public class YourService extends KiboRpcService
     // shift position value
 
     @Override
-    protected void runPlan1()　//ここが実際に行われる指示
+    protected void runPlan1()　//ここが実際に行われる指示。メインメソッド
     {
         api.judgeSendStart();　
 
@@ -71,7 +73,7 @@ public class YourService extends KiboRpcService
         //double[] AR_pos = AR_event((float) P3_pos[0], (float) P3_pos[1], (float) P3_pos[2], (float) P3_qua[0], (float) P3_qua[1], (float) P3_qua[2], (float) P3_qua[3], max_count, true);
         //double[] AR_pos = AR_event(10.9500f, -9.5900f, 5.4000f, 0.0f, 0.0f, 0.7071f, -0.7071f, max_count, true);
         double[] AR_pos = AR_event(10.9250f, -10.0400f, 5.4000f, 0.0f, 0.0f, 0.7071f, -0.7071f, max_count, true);
-        // AR part　ターゲットとの距離感の確保
+        // AR part　ターゲットとの距離の確保
 
         AR_pos = AR_event((float) AR_pos[0], -9.5900f, (float) AR_pos[2],0.0f, 0.0f, 0.7071f, -0.7071f, max_count, false);
         moveTo(AR_pos[0], -9.5900f, AR_pos[2], AR_pos[0]+ARtoTarget, -9.5900f-getPointCloud(center_range)-y_shift, AR_pos[2]+ARtoTarget);
@@ -92,9 +94,9 @@ public class YourService extends KiboRpcService
     }
     public void moveTo(float px, float py, float pz, float qx, float qy, float qz, float qw)
     {
-        Result result;
+        Result result;　
         int count = 0, max_count = 3;
-        Point point = new Point(px, py, pz);
+        Point point = new Point(px, py, pz); //インスタンスの生成
         Quaternion quaternion = new Quaternion(qx, qy, qz, qw);
 
         do
@@ -104,7 +106,7 @@ public class YourService extends KiboRpcService
         }
         while (!result.hasSucceeded() && count < max_count);
     }
-    public void moveTo(double x_org, double y_org, double z_org, double x_des, double y_des, double z_des)
+    public void moveTo(double x_org, double y_org, double z_org, double x_des, double y_des, double z_des) //オーバーロード
     {
         double dx = x_des-x_org;
         double dy = y_des-y_org;
