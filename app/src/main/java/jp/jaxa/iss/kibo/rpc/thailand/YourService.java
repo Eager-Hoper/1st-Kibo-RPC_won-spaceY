@@ -1,3 +1,4 @@
+// どうしてかよりもどう使うか　スマホと同じ
 /* このプログラムは第１回大会のファイナルラウンド向けに作られた。
 ここではチェックポイント（P1、P2)にあるQRコードを読み取ってその情報を元にP3まで到達し、そばにあるターゲットに近づく。
 そして画像認識でターゲット円を捉え、レーザーを照射する。ターゲットとの適切な距離を保つのが重要だった。*/
@@ -40,7 +41,7 @@ import static org.opencv.android.Utils.matToBitmap;
 import java.util.ArrayList;
 import java.util.List;
 // java library
-//libraryはどう調べれば見つかるのだろうか？使えるlibraryとそうでないものの区別は？
+//libraryはどう調べれば見つかるのだろうか？使えるlibraryとそうでないものの区別は？←他人のプログラムなどをみて真似る
 
 public class YourService extends KiboRpcService　//KiboRpcServiceというクラスはどこから来た？
 
@@ -68,12 +69,14 @@ public class YourService extends KiboRpcService　//KiboRpcServiceというク�
         moveTo(10.4600f, -6.7800f, 5.2400f, 0.0f, 0.0f, 0.0f, 0.0f);
         final double[] P3_qua = QR_event(11.0174f, -7.9378f, 5.4100f, 0.0f, -0.7071f, 0.0f, 0.7071f, max_count, P2);
         // QR part P3までの航行
+        // method QReventは３０１行目あたりから
 
         moveTo(11.4600f, -8.6000f, 4.8000f, 0.0f, 0.0f, 0.7071f, -0.7071f);
         //double[] AR_pos = AR_event((float) P3_pos[0], (float) P3_pos[1], (float) P3_pos[2], (float) P3_qua[0], (float) P3_qua[1], (float) P3_qua[2], (float) P3_qua[3], max_count, true);
         //double[] AR_pos = AR_event(10.9500f, -9.5900f, 5.4000f, 0.0f, 0.0f, 0.7071f, -0.7071f, max_count, true);
         double[] AR_pos = AR_event(10.9250f, -10.0400f, 5.4000f, 0.0f, 0.0f, 0.7071f, -0.7071f, max_count, true);
         // AR part　ターゲットとの距離の確保
+        // method AReventは３６１行目あたりから
 
         AR_pos = AR_event((float) AR_pos[0], -9.5900f, (float) AR_pos[2],0.0f, 0.0f, 0.7071f, -0.7071f, max_count, false);
         moveTo(AR_pos[0], -9.5900f, AR_pos[2], AR_pos[0]+ARtoTarget, -9.5900f-getPointCloud(center_range)-y_shift, AR_pos[2]+ARtoTarget);
@@ -305,7 +308,8 @@ public class YourService extends KiboRpcService　//KiboRpcServiceというク�
 
         while (contents == null && count < count_max)
         {
-            Log.d("QR[status]:", " start");
+            Log.d("QR[status]:", " start");　
+            //デバッグのログメッセージ？→https://developer.android.com/studio/debug/am-logcat?hl=ja　
             long start_time = SystemClock.elapsedRealtime();
             //                                            //
             moveTo(px, py, pz, qx, qy, qz, qw);
